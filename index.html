@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RelAfford6D</title>
+  <meta name="description" content="RelAfford6D: Relational 6D Affordance Graphs for Constraint-Driven Robotic Manipulation.">
+  <style>
+    :root {
+      color-scheme: light;
+      --text: #172033;
+      --muted: #5b667a;
+      --line: #d9dee8;
+      --soft: #f5f7fb;
+      --blue: #2459a6;
+      --green: #29715d;
+      --orange: #b45a21;
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #fff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 64px;
+      font-size: 14px;
+    }
+
+    .brand {
+      font-weight: 750;
+      letter-spacing: 0;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-end;
+    }
+
+    .hero {
+      padding: 52px 0 34px;
+      text-align: center;
+    }
+
+    .venue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      background: #fff;
+    }
+
+    h1 {
+      max-width: 920px;
+      margin: 18px auto 12px;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 820px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .authors {
+      max-width: 860px;
+      margin: 0 auto;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .affiliation {
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 24px 0 0;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--text);
+      background: #fff;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .button.primary {
+      background: var(--text);
+      border-color: var(--text);
+      color: #fff;
+    }
+
+    .media {
+      margin: 18px auto 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      overflow: hidden;
+    }
+
+    .media img,
+    .media video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    section {
+      padding: 48px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lead {
+      max-width: 870px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--soft);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--blue);
+      font-size: 26px;
+      line-height: 1.15;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .figure-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .figure {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--soft);
+    }
+
+    .caption {
+      padding: 12px 14px 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .video-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .video-card video {
+      width: 100%;
+      display: block;
+      background: #000;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .video-title {
+      padding: 10px 12px 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .note {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: var(--soft);
+      font-size: 14px;
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 18px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111827;
+      color: #f8fafc;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    footer {
+      padding: 30px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 14px 0;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .grid,
+      .metrics,
+      .figure-grid,
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="brand" href="#">RelAfford6D</a>
+        <div class="nav-links">
+          <a href="#abstract">Abstract</a>
+          <a href="#method">Method</a>
+          <a href="#experiments">Experiments</a>
+          <a href="#videos">Videos</a>
+          <a href="#citation">Citation</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="hero">
+        <div class="venue">ECCV 2026</div>
+        <h1>RelAfford6D: Relational 6D Affordance Graphs for Constraint-Driven Robotic Manipulation</h1>
+        <p class="subtitle">A training-free framework that bridges language, part-level 6D perception, and closed-loop kinematic constraint tracking for open-world manipulation.</p>
+        <p class="authors">Guodong Zhang, Qichen He, Wenyuan Xie, Shaokai Wu, Yanbiao Ji, Qiuchang Li, Bayram Bayramli, Yue Ding, Hongtao Lu</p>
+        <p class="affiliation">School of Computer Science, Shanghai Jiao Tong University</p>
+        <div class="buttons">
+          <a class="button primary" href="https://github.com/REPLACE_WITH_USERNAME/REPLACE_WITH_REPO">GitHub</a>
+          <a class="button" href="assets/papers/RelAfford6D_appendix.pdf">Supplementary PDF</a>
+          <a class="button" href="#videos">Real-World Videos</a>
+          <a class="button" href="#citation">BibTeX</a>
+          <a class="button" href="#">Paper Coming Soon</a>
+          <a class="button" href="#">Code Coming Soon</a>
+        </div>
+      </div>
+
+      <div class="media">
+        <img src="assets/images/teaser.png" alt="RelAfford6D teaser">
+      </div>
+    </div>
+
+    <section id="abstract">
+      <div class="wrap">
+        <h2>Abstract</h2>
+        <p class="lead">RelAfford6D addresses open-world robotic manipulation by introducing a Relational 6D Affordance Graph. From a free-form instruction, the system infers a semantic topology that links a primary interacting part to its physical anchor, grounds the two parts as metric SE(3) poses, and executes manipulation as a closed-loop kinematic constraint satisfaction problem.</p>
+        <p class="lead">The resulting framework avoids task-specific training and replaces isolated contact predictions with explicit part-to-part physical relations, enabling robust manipulation of articulated and rigid objects in simulation and the real world.</p>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="wrap">
+        <h2>Method</h2>
+        <p class="lead">RelAfford6D decomposes open-world manipulation into semantic topology generation, metric visual grounding, and constraint-driven execution.</p>
+        <div class="media">
+          <img src="assets/images/method.png" alt="RelAfford6D method overview">
+        </div>
+        <div class="grid">
+          <div class="card">
+            <h3>Semantic Topology Generation</h3>
+            <p>A structured kinematic knowledge base and retrieval-augmented LLM reasoning infer the object, primary interacting part, anchor part, and relational action token.</p>
+          </div>
+          <div class="card">
+            <h3>Metric Visual Grounding</h3>
+            <p>Vision foundation models ground semantic parts in RGB-D observations and estimate part-level 6D poses using a model-free FoundationPose pipeline.</p>
+          </div>
+          <div class="card">
+            <h3>Constraint-Driven Execution</h3>
+            <p>The instantiated part relation defines revolute, prismatic, or rigid-body manifolds that the robot tracks in closed loop with online replanning.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiments">
+      <div class="wrap">
+        <h2>Experiments</h2>
+        <p class="lead">We evaluate RelAfford6D across articulated-object manipulation, rigid-object manipulation, robustness tests, and real-world deployment.</p>
+        <div class="metrics">
+          <div class="metric">
+            <strong>74%</strong>
+            <span>Average success on articulated-object manipulation.</span>
+          </div>
+          <div class="metric">
+            <strong>100.0%</strong>
+            <span>Success on PickCube, StackCube, and PushCube.</span>
+          </div>
+          <div class="metric">
+            <strong>5 Hz</strong>
+            <span>Closed-loop tracking during execution.</span>
+          </div>
+          <div class="metric">
+            <strong>7</strong>
+            <span>Real-world manipulation categories on RM75.</span>
+          </div>
+        </div>
+        <div class="figure-grid">
+          <div class="figure">
+            <img src="assets/images/visual_grounding.png" alt="Metric visual grounding">
+            <div class="caption">Metric visual grounding elevates part-level masks into explicit SE(3) poses for downstream control.</div>
+          </div>
+          <div class="figure">
+            <img src="assets/images/closed_loop.png" alt="Closed-loop execution">
+            <div class="caption">Closed-loop tracking detects object-state changes and re-synthesizes physically valid trajectories.</div>
+          </div>
+          <div class="figure">
+            <img src="assets/images/real_world.png" alt="Real-world demonstrations">
+            <div class="caption">Real-world demonstrations on a Realman RM75 robot with an Intel RealSense D435 RGB-D camera.</div>
+          </div>
+          <div class="figure">
+            <img src="assets/images/pipeline.png" alt="Pipeline visualization">
+            <div class="caption">Pipeline view of semantic perception, visual perception, and action execution modules.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="supplementary">
+      <div class="wrap">
+        <h2>Supplementary Material</h2>
+        <p class="lead">The supplementary PDF includes additional method details, prompts, topology inference evaluation, real-world deployment details, latency analysis, OOD consistency evaluation, and failure analysis.</p>
+        <p><a class="button primary" href="assets/papers/RelAfford6D_appendix.pdf">Open Supplementary PDF</a></p>
+      </div>
+    </section>
+
+    <section id="videos">
+      <div class="wrap">
+        <h2>Real-World Demo Videos</h2>
+        <p class="lead">All videos are packaged as local MP4 assets so the project page works on GitHub Pages without external hosting.</p>
+        <div class="video-grid">
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/open_microwave_poster.jpg">
+              <source src="assets/videos/open_microwave.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Open Microwave</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/open_drawer_poster.jpg">
+              <source src="assets/videos/open_drawer.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Open Drawer</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/close_laptop_poster.jpg">
+              <source src="assets/videos/close_laptop.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Close Laptop</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/press_dispenser_poster.jpg">
+              <source src="assets/videos/press_dispenser.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Press Dispenser</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/pull_toaster_poster.jpg">
+              <source src="assets/videos/pull_toaster.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Pull Toaster</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/stack_cube_poster.jpg">
+              <source src="assets/videos/stack_cube.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Stack Cube</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/screw_bottle_poster.jpg">
+              <source src="assets/videos/screw_bottle.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Screw Bottle</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/closed_loop_open_drawer_poster.jpg">
+              <source src="assets/videos/closed_loop_open_drawer.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Closed-Loop Open Drawer</div>
+          </div>
+          <div class="video-card">
+            <video controls muted playsinline preload="metadata" poster="assets/images/closed_loop_screw_bottle_poster.jpg">
+              <source src="assets/videos/closed_loop_screw_bottle.mp4" type="video/mp4">
+            </video>
+            <div class="video-title">Closed-Loop Screw Bottle</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="release">
+      <div class="wrap">
+        <h2>Code Release</h2>
+        <div class="note">The code is not publicly released yet. This project page currently provides the paper assets, supplementary PDF, and real-world demonstration videos. The cleaned implementation, setup instructions, and evaluation scripts will be released after camera-ready cleanup.</div>
+      </div>
+    </section>
+
+    <section id="citation">
+      <div class="wrap">
+        <h2>Citation</h2>
+        <p>If you find this work useful, please consider citing:</p>
+        <pre><code>@inproceedings{zhang2026relafford6d,
+  title     = {RelAfford6D: Relational 6D Affordance Graphs for Constraint-Driven Robotic Manipulation},
+  author    = {Zhang, Guodong and He, Qichen and Xie, Wenyuan and Wu, Shaokai and Ji, Yanbiao and Li, Qiuchang and Bayramli, Bayram and Ding, Yue and Lu, Hongtao},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  year      = {2026}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">RelAfford6D project page. Code and final paper links will be updated after public release.</div>
+  </footer>
+</body>
+</html>
